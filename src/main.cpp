@@ -9,6 +9,7 @@ namespace fs = boost::filesystem;
 int main() {
     fs::path path = fs::path(".");
     Beatmap bm(path);
+    std::cout << "Detected images:\n";
     for (auto &bg : bm.getBackgrounds()) {
         std::cout << bg << "\n";
     }
