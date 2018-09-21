@@ -9,6 +9,8 @@ include_directories(include)
 
 add_executable(osutool
         src/main.cpp
-        src/beatmap.cpp)
+        src/beatmap.cpp
+        src/config.cpp
+        src/utils.cpp)
 
 target_link_libraries(osutool Boost::filesystem)
