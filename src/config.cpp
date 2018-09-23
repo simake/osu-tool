@@ -28,7 +28,7 @@ void Config::loadFile(const std::string& path) {
 }
 
 template<class T>
-inline T Config::get(const std::string& prop, const T& defaultValue) {
+T Config::get(const std::string& prop, const T& defaultValue) {
     try {
         return mProperties.get<T>(prop);
     } catch (boost::property_tree::ptree_error&) {

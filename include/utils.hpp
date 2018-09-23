@@ -5,8 +5,6 @@
 
 namespace utils {
 
-std::vector<std::string> split(std::string s, std::string delimiter);
-
-bool contains();
+std::vector<std::string> tokenize(const std::string& str, const std::string& delimiters);
 
 }

@@ -4,6 +4,7 @@
 #include <boost/filesystem.hpp>
 #include "beatmap.hpp"
 #include "config.hpp"
+#include "utils.hpp"
 
 namespace fs = boost::filesystem;
 

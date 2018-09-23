@@ -4,6 +4,7 @@
 #include <boost/filesystem.hpp>
 #include "beatmap.hpp"
 #include "config.hpp"
+#include "utils.hpp"
 
 namespace fs = boost::filesystem;
 
@@ -24,9 +25,9 @@ void Beatmap::parse(fs::path& beatmapDir) {
 
 bool Beatmap::isImage(fs::path& file) {
     Config& conf = Config::getInstance();
-    std::string imageTypes = conf.get("ImageTypes", std::string(".png .jpg")).split(); // TODO
-    return imageTypes.contains(file.extension()) // TODO
-    //return IMAGE_TYPES.find(path.extension().string()) != IMAGE_TYPES.end();
+    std::vector<std::string> imageTypes =
+            utils::tokenize(conf.get("ImageTypes", std::string(".png .jpg")), ", ");
+    return find(imageTypes.begin(), imageTypes.end(), file.extension()) != imageTypes.end();
 }
 
 std::vector<fs::path> Beatmap::getBackgrounds() { return mBackgrounds; }
