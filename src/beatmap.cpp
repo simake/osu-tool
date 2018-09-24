@@ -8,8 +8,6 @@
 
 namespace fs = boost::filesystem;
 
-//static const std::set<std::string> IMAGE_TYPES = {".png", ".jpg"};
-
 Beatmap::Beatmap(fs::path& beatmapDir) {
     parse(beatmapDir);
 }
@@ -17,17 +15,30 @@ Beatmap::Beatmap(fs::path& beatmapDir) {
 void Beatmap::parse(fs::path& beatmapDir) {
     for (const fs::directory_entry& de : fs::directory_iterator(beatmapDir)) {
         fs::path p = de.path();
-        if (isImage(p)) {
+        if (isType(p, FileType::IMAGE)) {
             mBackgrounds.push_back(p);
+        }
+        if (isType(p, FileType::VIDEO)) {
+            mVideos.push_back(p);
         }
     }
 }
 
-bool Beatmap::isImage(fs::path& file) {
+bool Beatmap::isType(fs::path& file, FileType type) {
+    std::string confProperty;
+    std::string defaults;
+    switch (type) {
+        case FileType::IMAGE:
+            confProperty = "ImageTypes";
+            defaults = ".png .jpg";
+            break;
+        case FileType::VIDEO:
+            confProperty = "VideoTypes";
+            defaults = "";
+    }
     Config& conf = Config::getInstance();
-    std::vector<std::string> imageTypes =
-            utils::tokenize(conf.get("ImageTypes", std::string(".png .jpg")), ", ");
-    return find(imageTypes.begin(), imageTypes.end(), file.extension()) != imageTypes.end();
+    std::vector<std::string> types = utils::tokenize(conf.get(confProperty, defaults), ", ");
+    return find(types.begin(), types.end(), file.extension()) != types.end();
 }
 
 std::vector<fs::path> Beatmap::getBackgrounds() { return mBackgrounds; }

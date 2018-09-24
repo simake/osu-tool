@@ -9,14 +9,11 @@
 class Config {
   public:
     static Config& getInstance();
-
     template<class T>
     T get(const std::string& prop, const T& defaultValue);
-
     void loadFile(const std::string& path);
 
     Config(const Config&) = delete;
-
     void operator=(const Config&) = delete;
 
   private:

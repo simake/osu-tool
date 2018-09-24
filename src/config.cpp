@@ -32,8 +32,8 @@ T Config::get(const std::string& prop, const T& defaultValue) {
     try {
         return mProperties.get<T>(prop);
     } catch (boost::property_tree::ptree_error&) {
-        std::cerr << prop << " property not found in " << CONFIG_PATH
-                  << ", using default value instead: " << defaultValue << std::endl;
+        //std::cerr << prop << " property not found in " << CONFIG_PATH
+        //          << ", using default value instead: " << defaultValue << std::endl;
         return defaultValue;
     }
 }

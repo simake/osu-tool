@@ -12,7 +12,8 @@ class Beatmap {
     std::vector<boost::filesystem::path> getVideos();
 
   private:
-    bool isImage(boost::filesystem::path&);
+    enum class FileType { IMAGE, VIDEO };
+    bool isType(boost::filesystem::path& file, FileType type);
     std::vector<boost::filesystem::path> mBackgrounds;
     std::vector<boost::filesystem::path> mVideos;
 };
