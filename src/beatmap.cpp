@@ -32,6 +32,9 @@ void Beatmap::parse(boost::filesystem::path& beatmapPath) {
             continue;
         }
         if (line[0] == '[' && line[line.length()-1] == ']') {
+            if (section == "Events") {
+                break; // we got what we came for
+            }
             section = line.substr(1, line.length()-2);
             continue;
         }
