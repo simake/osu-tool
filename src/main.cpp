@@ -2,32 +2,35 @@
 #include <string>
 #include <boost/filesystem.hpp>
 #include "beatmapset.hpp"
-#include "config.hpp"
-#include "utils.hpp"
 
 namespace fs = boost::filesystem;
 
 int main() {
-    fs::path bmPath = fs::path(
+    fs::path bmSetPath = fs::path(
             "osumaps/"
-            "28565 Hyadain - Hyadain no Kakakata Kataomoi-C (TV Size)/"
-            "Hyadain - Hyadain no Kakakata Kataomoi-C (TV Size) (Sushi) [Takuma_s Insane].osu"
+            "26886 Korpiklaani - Vodka"
     );
-    Beatmap bm(bmPath);
+    BeatmapSet bmSet(bmSetPath);
 
-    if (bm.parseSuccess()) {
-        std::cout << "Parse successful\n\n";
-    } else {
-        std::cout << "Parse failed\n\n";
+    std::cout << "Title: " << bmSet.getTitle() << "\n"
+              << "Artist: " << bmSet.getArtist() << "\n\n";
+
+    for (auto& bm : bmSet.getBeatmaps()) {
+        std::cout << "Difficulty: " << bm.getDifficulty() << "\n";
+        if (bm.parseSuccess()) {
+            std::cout << "Parse successful\n";
+        } else {
+            std::cout << "Parse failed\n";
+        }
+
+        std::cout << "Backgrounds found:\n";
+        for (auto& x : bm.getBackgrounds())
+            std::cout << "\t" << x << "\n";
+
+        std::cout << "Videos found:\n";
+        for (auto& x : bm.getVideos())
+            std::cout << "\t" << x << "\n";
+
+        std::cout << "\n";
     }
-
-    std::cout << "Backgrounds found:\n";
-    for (auto& x : bm.getBackgrounds())
-        std::cout << x << "\n";
-    std::cout << "\n";
-
-    std::cout << "Videos found:\n";
-    for (auto& x : bm.getVideos())
-        std::cout << x << "\n";
-    std::cout << "\n";
 }

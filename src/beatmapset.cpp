@@ -13,12 +13,24 @@ BeatmapSet::BeatmapSet(fs::path& beatmapDir) {
 }
 
 void BeatmapSet::load(fs::path& beatmapDir) {
+    mBeatmaps.clear();
     for (const fs::directory_entry& de : fs::directory_iterator(beatmapDir)) {
         fs::path p = de.path();
         if (isType(p, FileType::OSU)) {
             mBeatmaps.emplace_back(Beatmap(p));
         }
     }
+    for (auto& bm : mBeatmaps) {
+        if (bm.parseSuccess()) {
+            mTitle = bm.getTitle();
+            mArtist = bm.getArtist();
+            return;
+        }
+    }
+    std::cerr << "No successfully parsed beatmaps "
+              << "to get title/artist from.\n";
+    mTitle = "N/A";
+    mArtist = "N/A";
 }
 
 bool BeatmapSet::isType(fs::path& file, FileType type) {
@@ -45,4 +57,8 @@ bool BeatmapSet::isType(fs::path& file, FileType type) {
     return find(types.begin(), types.end(), ext) != types.end();
 }
 
-std::vector<Beatmap> BeatmapSet::getBeatmaps() { return mBeatmaps; };
+std::vector<Beatmap> BeatmapSet::getBeatmaps() { return mBeatmaps; }
+
+std::string BeatmapSet::getTitle() { return mTitle; }
+
+std::string BeatmapSet::getArtist() { return mArtist; }

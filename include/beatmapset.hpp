@@ -9,6 +9,8 @@ class BeatmapSet {
   public:
     BeatmapSet(boost::filesystem::path&);
     void load(boost::filesystem::path&);
+    std::string getTitle();
+    std::string getArtist();
     std::vector<Beatmap> getBeatmaps();
 
   private:
@@ -16,5 +18,7 @@ class BeatmapSet {
 
     bool isType(boost::filesystem::path& file, FileType type);
 
+    std::string mTitle;
+    std::string mArtist;
     std::vector<Beatmap> mBeatmaps;
 };
