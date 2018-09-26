@@ -1,46 +1,66 @@
-#include <set>
+#include <iostream> // DEBUG
 #include <string>
 #include <vector>
 #include <boost/filesystem.hpp>
+#include <boost/algorithm/string/trim.hpp>
 #include "beatmap.hpp"
-#include "config.hpp"
 #include "utils.hpp"
 
 namespace fs = boost::filesystem;
 
-Beatmap::Beatmap(fs::path& beatmapDir) {
-    parse(beatmapDir);
+Beatmap::Beatmap(boost::filesystem::path& beatmapPath) {
+    parse(beatmapPath);
 }
 
-void Beatmap::parse(fs::path& beatmapDir) {
-    for (const fs::directory_entry& de : fs::directory_iterator(beatmapDir)) {
-        fs::path p = de.path();
-        if (isType(p, FileType::IMAGE)) {
-            mBackgrounds.push_back(p);
+void Beatmap::parse(boost::filesystem::path& beatmapPath) {
+    fs::fstream file(beatmapPath);
+    if (!file.is_open()) {
+        mParseSuccess = false;
+        return;
+    }
+    std::string line;
+    std::string section;
+    while (std::getline(file, line)) {
+        size_t commentStart = line.find("//");
+        if (commentStart != std::string::npos) {
+            line = line.substr(0, commentStart);
         }
-        if (isType(p, FileType::VIDEO)) {
-            mVideos.push_back(p);
+        boost::trim_if(line, [](char x) {
+            return isspace(x) > 0;
+        });
+        if (line.empty()) {
+            continue;
         }
+        if (line[0] == '[' && line[line.length()-1] == ']') {
+            section = line.substr(1, line.length()-2);
+            continue;
+        }
+        if (section == "Events") {
+            parseEvent(line);
+        }
+    }
+    file.close();
+    mParseSuccess = true;
+}
+
+void Beatmap::parseEvent(std::string& line) {
+    std::vector<std::string> tokens = utils::tokenize(line, ",");
+    std::string type = tokens[0];
+    if (type == "Background" || type == "0") {
+        std::string image = tokens[2];
+        image = image.substr(1, image.length()-2); // removing quotes
+        mBackgrounds.push_back(image);
+    } else if (type == "Video" || type == "1") {
+        std::string video = tokens[2];
+        video = video.substr(1, video.length()-2);
+        mVideos.push_back(video);
     }
 }
 
-bool Beatmap::isType(fs::path& file, FileType type) {
-    std::string confProperty;
-    std::string defaults;
-    switch (type) {
-        case FileType::IMAGE:
-            confProperty = "ImageTypes";
-            defaults = ".png .jpg";
-            break;
-        case FileType::VIDEO:
-            confProperty = "VideoTypes";
-            defaults = "";
-    }
-    Config& conf = Config::getInstance();
-    std::vector<std::string> types = utils::tokenize(conf.get(confProperty, defaults), ", ");
-    return find(types.begin(), types.end(), file.extension()) != types.end();
+bool Beatmap::parseSuccess() {
+    return mParseSuccess;
 }
 
-std::vector<fs::path> Beatmap::getBackgrounds() { return mBackgrounds; }
+std::vector<std::string> Beatmap::getBackgrounds() { return mBackgrounds; };
 
-std::vector<fs::path> Beatmap::getVideos() { return mVideos; }
+std::vector<std::string> Beatmap::getVideos() { return mVideos; };

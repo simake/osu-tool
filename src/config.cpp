@@ -16,12 +16,12 @@ Config& Config::getInstance() {
 
 Config::Config() {
     loadFile(CONFIG_PATH);
-    printf("Constructor called\n");
 }
 
 void Config::loadFile(const std::string& path) {
     try {
         pt::read_ini(path, mProperties);
+        std::cout << "Successfully loaded " << CONFIG_PATH << std::endl;
     } catch (pt::ini_parser_error&) {
         std::cerr << CONFIG_PATH << " not found. Using defaults." << std::endl;
     }
@@ -39,7 +39,5 @@ T Config::get(const std::string& prop, const T& defaultValue) {
 }
 
 // Add new template declarations below to avoid linker errors
-
 template int Config::get(const std::string& prop, const int& defaultValue);
-
 template std::string Config::get(const std::string& prop, const std::string& defaultValue);
