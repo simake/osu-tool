@@ -35,8 +35,8 @@ void Beatmap::parse(const boost::filesystem::path& beatmapPath) {
         if (line.empty()) {
             continue;
         }
-        if (line[0] == '[' && line[line.length()-1] == ']') {
-            section = line.substr(1, line.length()-2);
+        if (line[0] == '[' && line[line.length() - 1] == ']') {
+            section = line.substr(1, line.length() - 2);
             continue;
         }
         if (section == "Events") {
@@ -54,11 +54,11 @@ void Beatmap::parseEvent(const std::string& line) {
     std::string type = tokens[0];
     if (type == "Background" || type == "0") {
         std::string image = tokens[2];
-        image = image.substr(1, image.length()-2); // removing quotes
+        image = image.substr(1, image.length() - 2); // removing quotes
         mBackgrounds.push_back(image);
     } else if (type == "Video" || type == "1") {
         std::string video = tokens[2];
-        video = video.substr(1, video.length()-2);
+        video = video.substr(1, video.length() - 2);
         mVideos.push_back(video);
     }
 }
@@ -77,18 +77,18 @@ void Beatmap::parseMetadata(const std::string& line) {
     }
 }
 
-bool Beatmap::parseSuccess() { return mParseSuccess; }
+bool Beatmap::parseSuccess() const { return mParseSuccess; }
 
-const fs::path& Beatmap::getPath() { return mPath; }
+const fs::path& Beatmap::getPath() const { return mPath; }
 
-const std::string& Beatmap::getTitle() { return mTitle; }
+const std::string& Beatmap::getTitle() const { return mTitle; }
 
-const std::string& Beatmap::getArtist() { return mArtist; }
+const std::string& Beatmap::getArtist() const { return mArtist; }
 
-const std::string& Beatmap::getCreator() { return mCreator; }
+const std::string& Beatmap::getCreator() const { return mCreator; }
 
-const std::string& Beatmap::getDifficulty() { return mDifficulty; }
+const std::string& Beatmap::getDifficulty() const { return mDifficulty; }
 
-const std::vector<std::string>& Beatmap::getBackgrounds() { return mBackgrounds; }
+const std::vector<std::string>& Beatmap::getBackgrounds() const { return mBackgrounds; }
 
-const std::vector<std::string>& Beatmap::getVideos() { return mVideos; }
+const std::vector<std::string>& Beatmap::getVideos() const { return mVideos; }

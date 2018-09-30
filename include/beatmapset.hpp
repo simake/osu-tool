@@ -9,9 +9,9 @@ class BeatmapSet {
   public:
     BeatmapSet(const boost::filesystem::path&);
     void load(const boost::filesystem::path&);
-    const std::string& getTitle();
-    const std::string& getArtist();
-    const std::vector<Beatmap>& getBeatmaps();
+    const std::string& getTitle() const;
+    const std::string& getArtist() const;
+    const std::vector<Beatmap>& getBeatmaps() const;
 
   private:
     enum class FileType { IMAGE, VIDEO, OSU };

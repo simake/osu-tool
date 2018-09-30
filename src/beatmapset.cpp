@@ -57,8 +57,8 @@ bool BeatmapSet::isType(const fs::path& file, FileType type) {
     return find(types.begin(), types.end(), ext) != types.end();
 }
 
-const std::vector<Beatmap>& BeatmapSet::getBeatmaps() { return mBeatmaps; }
+const std::vector<Beatmap>& BeatmapSet::getBeatmaps() const { return mBeatmaps; }
 
-const std::string& BeatmapSet::getTitle() { return mTitle; }
+const std::string& BeatmapSet::getTitle() const { return mTitle; }
 
-const std::string& BeatmapSet::getArtist() { return mArtist; }
+const std::string& BeatmapSet::getArtist() const { return mArtist; }
