@@ -7,7 +7,7 @@ namespace fs = boost::filesystem;
 
 int main() {
     fs::path bmSetPath = fs::path(
-            "osumaps/"
+            "../test/beatmapsets/"
             "26886 Korpiklaani - Vodka"
     );
     BeatmapSet bmSet(bmSetPath);

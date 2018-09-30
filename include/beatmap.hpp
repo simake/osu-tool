@@ -7,19 +7,20 @@
 
 class Beatmap {
   public:
-    Beatmap(boost::filesystem::path&);
-    void parse(boost::filesystem::path&);
+    Beatmap(const boost::filesystem::path&);
     bool parseSuccess();
-    std::string getTitle();
-    std::string getArtist();
-    std::string getCreator();
-    std::string getDifficulty();
-    std::vector<std::string> getBackgrounds();
-    std::vector<std::string> getVideos();
+    const boost::filesystem::path& getPath();
+    const std::string& getTitle();
+    const std::string& getArtist();
+    const std::string& getCreator();
+    const std::string& getDifficulty();
+    const std::vector<std::string>& getBackgrounds();
+    const std::vector<std::string>& getVideos();
 
   private:
-    void parseEvent(std::string& line);
-    void parseMetadata(std::string& line);
+    void parse(const boost::filesystem::path&);
+    void parseEvent(const std::string& line);
+    void parseMetadata(const std::string& line);
 
     bool mParseSuccess;
     boost::filesystem::path mPath;
