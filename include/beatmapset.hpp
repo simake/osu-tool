@@ -14,10 +14,6 @@ class BeatmapSet {
     const std::vector<Beatmap>& getBeatmaps() const;
 
   private:
-    enum class FileType { IMAGE, VIDEO, OSU };
-
-    bool isType(const boost::filesystem::path& file, FileType type);
-
     std::string mTitle;
     std::string mArtist;
     std::vector<Beatmap> mBeatmaps;
