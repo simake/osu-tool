@@ -2,8 +2,8 @@
 #include <string>
 #include <vector>
 #include <boost/filesystem.hpp>
-#include "beatmapset.hpp"
-#include "beatmap.hpp"
+#include "osutool/parsing/beatmapset.hpp"
+#include "osutool/parsing/beatmap.hpp"
 #include "utils.hpp"
 
 namespace fs = boost::filesystem;

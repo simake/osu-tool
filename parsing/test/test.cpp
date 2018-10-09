@@ -4,10 +4,10 @@
 #include <boost/test/unit_test.hpp>
 #include <string>
 #include <vector>
-#include "beatmap.hpp"
-#include "beatmapset.hpp"
+#include <osutool/parsing/beatmap.hpp>
+#include <osutool/parsing/beatmapset.hpp>
 
-const std::string BEATMAPSETS_PATH = "../test/beatmapsets/";
+const std::string BEATMAPSETS_PATH = "beatmapsets/";
 
 
 void testBeatmap(Beatmap& bm, const std::string& expTitle, const std::string& expArtist,

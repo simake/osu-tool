@@ -3,9 +3,9 @@
 #include <vector>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string/trim.hpp>
-#include <beatmap.hpp>
+#include <osutool/parsing/beatmap.hpp>
 
-#include "beatmap.hpp"
+#include "osutool/parsing/beatmap.hpp"
 #include "utils.hpp"
 
 namespace fs = boost::filesystem;
