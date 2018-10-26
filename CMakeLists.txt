@@ -10,3 +10,4 @@ if(BUILD_TEST)
 endif()
 
 add_subdirectory(parsing)
+add_subdirectory(gui)
