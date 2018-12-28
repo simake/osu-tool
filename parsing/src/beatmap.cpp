@@ -10,6 +10,9 @@
 
 namespace fs = boost::filesystem;
 
+namespace osutool {
+namespace parsing {
+
 Beatmap::Beatmap(const boost::filesystem::path& beatmapPath) {
     parse(beatmapPath);
 }
@@ -92,3 +95,6 @@ const std::string& Beatmap::getDifficulty() const { return mDifficulty; }
 const std::vector<std::string>& Beatmap::getBackgrounds() const { return mBackgrounds; }
 
 const std::vector<std::string>& Beatmap::getVideos() const { return mVideos; }
+
+}
+}

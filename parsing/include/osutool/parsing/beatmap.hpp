@@ -5,6 +5,9 @@
 #include <boost/filesystem.hpp>
 #include "beatmap.hpp"
 
+namespace osutool {
+namespace parsing {
+
 class Beatmap {
   public:
     Beatmap(const boost::filesystem::path&);
@@ -31,3 +34,6 @@ class Beatmap {
     std::vector<std::string> mBackgrounds;
     std::vector<std::string> mVideos;
 };
+
+}
+}

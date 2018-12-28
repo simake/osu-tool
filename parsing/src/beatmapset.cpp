@@ -8,6 +8,9 @@
 
 namespace fs = boost::filesystem;
 
+namespace osutool {
+namespace parsing {
+
 BeatmapSet::BeatmapSet(const fs::path& beatmapDir) {
     load(beatmapDir);
 }
@@ -38,3 +41,14 @@ const std::vector<Beatmap>& BeatmapSet::getBeatmaps() const { return mBeatmaps; 
 const std::string& BeatmapSet::getTitle() const { return mTitle; }
 
 const std::string& BeatmapSet::getArtist() const { return mArtist; }
+
+std::vector<BeatmapSet> getBeatmapSets(const fs::path& beatmapSetDir) {
+    std::vector<BeatmapSet> beatmapSets;
+    for (const fs::directory_entry& de : fs::directory_iterator(beatmapSetDir)) {
+        beatmapSets.emplace_back(BeatmapSet(de.path()));
+    }
+    return beatmapSets;
+}
+
+}
+}

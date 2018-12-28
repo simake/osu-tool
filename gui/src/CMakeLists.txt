@@ -1,5 +1,4 @@
-find_package(Qt5Core CONFIG REQUIRED)
-find_package(Qt5Widgets CONFIG REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 # Instruct CMake to run moc automatically when needed
 set(CMAKE_AUTOMOC ON)
@@ -17,4 +16,5 @@ add_executable(gui ${SRC_FILES})
 target_link_libraries(gui
         PRIVATE
             Qt5::Core
-            Qt5::Widgets)
+            Qt5::Widgets
+            osutool::parsing)
