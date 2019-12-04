@@ -1,3 +1,5 @@
+#include <string>
+
 #include <QMainWindow>
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
@@ -7,11 +9,11 @@
 
 namespace op = osutool::parsing;
 
-MainWindow::MainWindow(QWidget* parent)
+MainWindow::MainWindow(const std::string& beatmapSetDir, QWidget* parent)
         : QMainWindow(parent),
           ui(new Ui::MainWindow) {
     ui->setupUi(this);
-    listBeatmapSets("../../../parsing/test/beatmapsets");
+    listBeatmapSets(beatmapSetDir); // has to be defined externally for now
 }
 
 MainWindow::~MainWindow() {
