@@ -7,6 +7,9 @@
 #include <osutool/parsing/beatmap.hpp>
 #include <osutool/parsing/beatmapset.hpp>
 
+using osutool::parsing::Beatmap;
+using osutool::parsing::BeatmapSet;
+
 const std::string BEATMAPSETS_PATH = "beatmapsets/";
 
 
