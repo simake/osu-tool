@@ -10,6 +10,8 @@ namespace parsing {
 
 class BeatmapSet {
 public:
+    BeatmapSet();
+
     BeatmapSet(const boost::filesystem::path &);
 
     void load(const boost::filesystem::path &);

@@ -10,7 +10,9 @@ namespace parsing {
 
 class Beatmap {
   public:
+    Beatmap();
     Beatmap(const boost::filesystem::path&);
+    void parse(const boost::filesystem::path&);
     bool parseSuccess() const;
     const boost::filesystem::path& getPath() const;
     const std::string& getTitle() const;
@@ -21,11 +23,10 @@ class Beatmap {
     const std::vector<std::string>& getVideos() const;
 
   private:
-    void parse(const boost::filesystem::path&);
     void parseEvent(const std::string& line);
     void parseMetadata(const std::string& line);
 
-    bool mParseSuccess;
+    bool mParseSuccess = false;
     boost::filesystem::path mPath;
     std::string mTitle;
     std::string mArtist;

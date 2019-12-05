@@ -11,6 +11,8 @@ namespace fs = boost::filesystem;
 namespace osutool {
 namespace parsing {
 
+BeatmapSet::BeatmapSet() {}
+
 BeatmapSet::BeatmapSet(const fs::path& beatmapDir) {
     load(beatmapDir);
 }
