@@ -1,8 +1,9 @@
-#include <string>
+#include <boost/filesystem/path.hpp>
 
 #include <QMainWindow>
 #include <QListWidgetItem>
-#include <QSharedPointer>
+#include <QPixmap>
+
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
@@ -10,17 +11,21 @@
 #include <osutool/parsing/beatmapset.hpp>
 
 namespace op = osutool::parsing;
+namespace fs = boost::filesystem;
 
 Q_DECLARE_METATYPE(op::BeatmapSet);
 Q_DECLARE_METATYPE(op::Beatmap);
 
-MainWindow::MainWindow(const std::string& beatmapSetDir, QWidget* parent)
+MainWindow::MainWindow(const fs::path& beatmapSetDir, QWidget* parent)
         : QMainWindow(parent),
           ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
     connect(ui->listWidget, SIGNAL(itemClicked(QListWidgetItem*)),
-            this, SLOT(onItemClicked(QListWidgetItem*)));
+            this, SLOT(onBeatmapSetClicked(QListWidgetItem*)));
+
+    connect(ui->listWidget_2, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(onBeatmapClicked(QListWidgetItem*)));
 
     listBeatmapSets(beatmapSetDir); // has to be defined externally for now
 }
@@ -29,7 +34,7 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::listBeatmapSets(std::string path) {
+void MainWindow::listBeatmapSets(const fs::path& path) {
     ui->listWidget->clear();
     std::vector<op::BeatmapSet> beatmapSets = op::getBeatmapSets(path);
     for (const auto& set : beatmapSets) {
@@ -51,7 +56,18 @@ void MainWindow::listBeatmaps(const op::BeatmapSet& beatmapSet) {
     }
 }
 
+void MainWindow::displayImage(const fs::path& path) {
+    QPixmap pm(QString::fromStdString(path.string()));
+    ui->label->setPixmap(pm.scaled(ui->label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    ui->label->setAlignment(Qt::AlignCenter);
+}
 
-void MainWindow::onItemClicked(QListWidgetItem* item) {
+void MainWindow::onBeatmapSetClicked(QListWidgetItem* item) {
     listBeatmaps(qvariant_cast<op::BeatmapSet>(item->data(Qt::UserRole)));
+}
+
+void MainWindow::onBeatmapClicked(QListWidgetItem* item) {
+    op::Beatmap bm = qvariant_cast<op::Beatmap>(item->data(Qt::UserRole));
+    fs::path bgPath = bm.getPath().parent_path() /= bm.getBackgrounds().at(0);
+    displayImage(bgPath);
 }

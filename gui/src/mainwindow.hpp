@@ -1,9 +1,10 @@
 #pragma once
 
-#include <string>
+#include <boost/filesystem/path.hpp>
 
 #include <QMainWindow>
 #include <QListWidgetItem>
+
 #include <osutool/parsing/beatmapset.hpp>
 
 namespace Ui {
@@ -14,13 +15,15 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
   public:
-    explicit MainWindow(const std::string& beatmapSetDir, QWidget* parent = 0);
+    explicit MainWindow(const boost::filesystem::path& beatmapSetDir, QWidget* parent = 0);
     ~MainWindow();
-    void listBeatmapSets(std::string path);
+    void listBeatmapSets(const boost::filesystem::path& path);
     void listBeatmaps(const osutool::parsing::BeatmapSet& beatmapSet);
+    void displayImage(const boost::filesystem::path& path);
 
   private slots:
-    void onItemClicked(QListWidgetItem* item);
+    void onBeatmapSetClicked(QListWidgetItem* item);
+    void onBeatmapClicked(QListWidgetItem* item);
 
   private:
     Ui::MainWindow* ui;
